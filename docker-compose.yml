@@ -26,7 +26,9 @@ services:
         # This allows the React app to know where to find the backend.
         REACT_APP_API_URL: http://backend:5000 # 'backend' is the service name defined above
     ports:
-      - "80:80" # Map port 80 on the host to port 80 in the container (Nginx default)
+      - "3000:80" # Changed from "80:80" to "3000:80" to avoid port conflict on host
+                  # Host Port 3000 -> Container Port 80
     depends_on:
       - backend # Ensure backend starts before frontend
     restart: always # Always restart the container if it stops
+

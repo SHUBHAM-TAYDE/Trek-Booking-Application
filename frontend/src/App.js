@@ -1,3 +1,4 @@
+// frontend/src/App.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './App.css'; // Basic CSS for styling
@@ -289,6 +290,5 @@ function App() {
     );
 }
 
-// Use React 18's createRoot API for rendering
-const root = window.ReactDOM.createRoot(document.getElementById('root'));
-root.render(<App />);
+export default App; // Ensure App is exported as default
+
