@@ -1,0 +1,32 @@
+# docker-compose.yml
+version: '3.8' # Specify Docker Compose file format version
+
+services:
+  # Backend Service Definition
+  backend:
+    build: ./backend # Build the image from the Dockerfile in the ./backend directory
+    ports:
+      - "5000:5000" # Map port 5000 on the host to port 5000 in the container
+    environment:
+      # Set Flask environment for development (optional, but good practice)
+      FLASK_ENV: development 
+      PORT: 5000 # Explicitly set port for Flask app
+    volumes:
+      # Mount the backend source code into the container for live reloading during development
+      # Remove or comment this out for production deployments
+      - ./backend:/app 
+    restart: always # Always restart the container if it stops
+
+  # Frontend Service Definition
+  frontend:
+    build:
+      context: ./frontend # Build the image from the Dockerfile in the ./frontend directory
+      args:
+        # Pass the backend API URL to the React app during its build process
+        # This allows the React app to know where to find the backend.
+        REACT_APP_API_URL: http://backend:5000 # 'backend' is the service name defined above
+    ports:
+      - "80:80" # Map port 80 on the host to port 80 in the container (Nginx default)
+    depends_on:
+      - backend # Ensure backend starts before frontend
+    restart: always # Always restart the container if it stops
